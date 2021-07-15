@@ -132,3 +132,27 @@ et  ngClass , qui permettent d'attribuer des styles ou des classes de manière d
                 'list-group-item-success': appareilStatus === 'allume',
                 'list-group-item-danger': appareilStatus === 'eteint'}">
         ]
+
+
+******************************************************************************************************************************************
+13-Modifiez les données en temps réel avec les Pipes
+  Un pipe que l'on utilise très souvent est DatePipe , qui analyse des objets JS de type Date et qui les affiche d'une manière plus
+  lisible que leur encodage de base.  Par exemple, imaginez que vous vouliez ajouter la date de la dernière mise à jour dans votre
+  application des appareils électriques.  Commencez par créer cet objet dans  AppComponent  et par l'afficher directement dans le
+  template :
+
+        *on ajoute la date de la derniere modification comme variable dans appComponent [lastUpdate = new Date();]
+        *puis on lui fait appel via les pipes
+              [
+                <h3>sans pipes</h3>
+                <p>Mis à jour : {{ lastUpdate }}</p>
+                <h3>avec pipes</h3>
+                <p>Mis à jour : {{ lastUpdate | date }}</p>
+                <!--ou bien-->
+                <p>Mis à jour : {{ lastUpdate | date: 'short' }}</p>
+                <!--ou bien-->
+                <p>Mis à jour : {{ lastUpdate | date: 'yMMMMEEEEd' }}</p>
+                <!--Chaine de pipes-->
+                <h3>Chaine de pipes (formatage+Maj)</h3>
+                <p>Mis à jour : {{ lastUpdate | date: 'yMMMMEEEEd' | uppercase }}</p>
+              ]

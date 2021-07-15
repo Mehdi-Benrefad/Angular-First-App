@@ -2,6 +2,18 @@
   <div class="row">
     <div class="col-xs-12">
       <h2>Mes appareils</h2>
+      <h3>sans pipes</h3>
+      <p>Mis à jour : {{ lastUpdate }}</p>
+      <h3>avec pipes</h3>
+      <p>Mis à jour : {{ lastUpdate | date }}</p>
+      <!--ou bien-->
+      <p>Mis à jour : {{ lastUpdate | date: 'short' }}</p>
+      <!--ou bien-->
+      <p>Mis à jour : {{ lastUpdate | date: 'yMMMMEEEEd' }}</p>
+      <!--Chaine de pipes-->
+      <h3>Chaine de pipes (formatage+Maj)</h3>
+      <p>Mis à jour : {{ lastUpdate | date: 'yMMMMEEEEd' | uppercase }}</p>
+
       <ul class="list-group">
         <!--
         <app-appareil [appareilName]="appareilOne" [appareilStatus]="'eteint'" ></app-appareil>
@@ -16,6 +28,8 @@
               (click)="toutAllumer()"
       >Tout Alumer</button>
 
+      <br><br><br>
+      <h2>Created By: {{title}}</h2>
     </div>
   </div>
 </div>
