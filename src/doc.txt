@@ -1,0 +1,134 @@
+1- setup latest version of nodejs => [npm install -g npm@latest]
+
+2- install angilar cli => [npm install -g @angular/cli]
+
+3- creer un projet => [ng new mon-premier-projet] OR [ng new mon-projet-angular --style=scss --skip-tests=true]
+
+4- lancer le serveur de developpement => [ng serve]
+
+5- installer Bootstrap [npm install bootstrap@3.3.7 --save]
+
+6- installer le package rxjs [npm install rxjs-compat --save]
+
+7- on ajout bootstrap a angular.json  archythect>styles> "./node_modules/bootstrap/dist/css/bootstrap.css",
+
+8- le dossier app (Ce dossier contient le module principal de l'application et les trois fichiers du component principal  AppComponent  :
+ son template en HTML, sa feuille de styles en SCSS, et son fichier TypeScript, qui contiendra sa logique.)
+
+9-app.component.ts  (Ici, à l'intérieur du décorateur  @Component()  , vous trouvez un objet qui contient les éléments suivants :
+    selector  : il s'agit du nom qu'on utilisera comme balise HTML pour afficher ce component, comme vous l'avez vu avec  <app-root>  .
+    Ce nom doit être unique et ne doit pas être un nom réservé HTML de type  <div>  ,  <body>  etc. On utilisera donc très souvent un
+    préfixe comme  app  , par exemple ; templateUrl  : le chemin vers le code HTML à injecter ; styleUrls  : un array contenant un ou
+    plusieurs chemins vers les feuilles de styles qui concernent ce component ;)
+
+10- creons notre premier component => [ng generate component mon-premier].
+
+*****************************************************************************************************************************************
+11- Gerer les donnees dynamiques:
+
+11-1- on cree notre component appareil [ng g c appareil]
+    on utilise la classe bootstrap [li.list-group-item]
+
+11-2- grace a l'interpolation on affiche le nom de l'appareil dynamiquement:
+        dans appareil.component.ts on cree une variable appareilname,
+        dans appareil.component.html on fait appel a cette variable {{appareilName}}
+
+11-2- property binding (on utilise les crochet pour lier un attribut a une valiable)
+        Avec le string interpolation et le property binding, vous savez communiquer depuis votre code TypeScript vers le template HTML.
+        Maintenant, je vais vous montrer comment réagir dans votre code TypeScript aux événements venant du template HTML.
+        Actuellement, vous avez un bouton sur votre template qui s'active au bout de 4 secondes.  Vous allez maintenant lui ajouter une
+        fonctionnalité liée à l'événement "click" (déclenché quand l'utilisateur clique dessus)
+
+        *on cree un bouton qui v etre desactive car la varuable is auth est egale a false
+        *on cree un timeout a l'interieur du constructeur qui v nous permettre d'activer le bouton dans 4 secondes.
+
+11-3- Event Binding: (reagir dans le coode typescript a partir des evenements venant du template),(on utilise les parentheses pour se
+        lier a un evenement.).
+        on ajout au bouton un evenement au click, et on tui associe une fonction, qui elle meme sera declaree dan le fichier TypeScript.
+
+11-4- Two ways Binding:(C'est une sorte de liaisons des deux sens),(donc on utilise les parentheses et les crochets)
+        * Dans "app.module.ts" importe ajoute le form modules, et on l'ajoute dans la liste des imports. (import { FormsModule } from '@angular/forms';)
+        * On va ajouter un input, qui va contenir le nom de l'appareil et quand on change le nom dans l'input le nom de la variable change,
+        ce qui implique le chamgement de la valeur du label. Tous cela via la proprietes ngmodel.
+        [<input type="text" class="form-control" [(ngModel)]="appareilName">]
+
+11-5- Les Proprietes personnalisees:
+        On peut paire communiquer les composants entre eux, et laisser passer une information du composant pere au composant fils,
+        Dans notre exemple le nom de l'appareil. pour ce faire o doit:
+        * importer input.
+        * utiliser le decorateur @Input() [@Input() appareilName: string;]
+        * affecter le nom de l'appareil a partir du composant pere
+        /!\ Or tous cela n'est tres dynamique il est preferable de passer les donnees a partir de typescripte a la place du tag HTML.
+        ** on cree nos variables dans le fichier app,component.très
+        ** on y accede via les crochets (*^) " [appareilName]="nom de la variable" "
+
+        =>On fait la meme chose pour l'etat de l'appareil
+
+
+*****************************************************************************************************************************************
+
+12- Structurer le document avec des directives:
+        Les directives sont des instructions intégrées dans le DOM que vous utiliserez presque systématiquement quand vous créerez des
+        applications Angular.  Quand Angular lit votre template et rencontre une directive qu'il reconnait, il suit les instructions
+        correspondantes.  Vous pouvez créer vos propres directives, mais dans le cadre de ce cours, nous allons uniquement aborder
+        certaines directives qui sont fournies avec Angular et qui sont extrêmement utiles.
+        Il existe deux types principaux de directive :
+        * les directives structurelles
+        &&
+        * les directives par attribut.
+
+12-1- les directives structurelles:
+Ce sont des directives qui, comme leur nom l'indique, modifient la structure du document.  Dans ce
+chapitre, vous allez en découvrir deux (il en existe d'autres) :  *ngIf  , pour afficher des données de façon conditionnelle, et  *ngFor
+, pour itérer des données dans un array, par exemple.
+
+        * (*ngif) Dans notre exemple on va ajouter un carre rouge qui ne va s'afficher que si l'appareil est etteint (*ngif)
+                [<div style="width:20px;height:20px;background-color:red;"
+                        *ngIf="appareilStatus === 'éteint'"></div>]
+
+        * (*ngfor) on va afficher les 3 appareils dynamiquement:
+                ** on remplace la declaration des 3 variables par la declaration d'un seul tableau d'objets.
+                ** dans le fichier html on remplace les 3 balise app-appareil en une seule geree avec la directive (*ngfor)
+                [
+                        <app-appareil  *ngFor="let appareil of appareils"
+                        [appareilName]="appareil.name"
+                        [appareilStatus]="appareil.status"></app-appareil>
+                ]
+
+12-2- les directives par attribut:
+À la différence des directives structurelles, les directives par attribut modifient le comportement d'un objet déjà existant.  Vous avez
+déjà utilisé une directive de ce type sans le savoir : la directive  ngModel  que vous avez employée pour le two-way binding, qui modifie
+la valeur du  <input>  et répond à tout changement qu'on lui apporte.  Je vais vous montrer deux autres exemples très utiles :  ngStyle
+et  ngClass , qui permettent d'attribuer des styles ou des classes de manière dynamique.
+
+        *(ngstyle) Cette directive permet d'appliquer des styles à un objet du DOM de manière dynamique. Imaginez que, pour l'application
+        des appareils électriques, vous souhaitiez modifier la couleur du texte selon si l'appareil est allumé ou non, disons vert pour
+        allumé, rouge pour éteint.   ngStyle  vous permet de faire cela :
+
+        ** on ajoute la directive "ngstyle" dans la balise <h4></h4>
+                [
+                        <h4 [ngStyle]="{color: getColor()}">Appareil : {{ appareilName }} -- Statut : {{ getStatus() }}</h4>
+                ]
+        ** on cree une fonction getcolor qui vq retourner la couleur en fonction de l'etat de la machine
+                [
+                        getColor() {
+                                if(this.appareilStatus === 'allume') {
+                                        return 'green';
+                                } else if(this.appareilStatus === 'eteint') {
+                                        return 'red';
+                                }
+                                return 'black'
+                        }
+                ]
+
+
+
+        *(ngclass) Au-delà de modifier des styles directement, il peut être très utile d'ajouter des classes CSS à un élément de manière
+        dynamique.  Comme  ngStyle ,  ngClass  prend un objet clé-valeur, mais cette fois avec la classe à appliquer en clé, et la
+        condition en valeur.
+        => Pour cet exemple, on va appliquer des classes Bootstrap à la balise  <li>  en fonction du statut de l'appareil :
+        [
+                <li [ngClass]="{'list-group-item': true,
+                'list-group-item-success': appareilStatus === 'allume',
+                'list-group-item-danger': appareilStatus === 'eteint'}">
+        ]
