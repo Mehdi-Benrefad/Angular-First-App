@@ -28,7 +28,15 @@
       </ul>
       <button class="btn btn-success" [disabled]="!isAuth"
               (click)="toutAllumer()"
-      >Tout Alumer</button>
+      >simulation</button><br><br>
+
+      <button class="btn btn-success"
+              [disabled]="!isAuth"
+              (click)="onAllumer()">Tout allumer</button>
+
+      <button class="btn btn-danger"
+              [disabled]="!isAuth"
+              (click)="onEteindre()">Tout éteindre</button>
 
       <br><br><br>
       <h2>Created By: {{title}}</h2>

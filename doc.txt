@@ -206,3 +206,21 @@ implémenter la méthode  ngOnInit()
   ** dans la déclaration de classe  AppComponent , nous allons implémenter l'interface  OnInit
   ** récupérer les informations depuis  AppareilService  dans la méthode  ngOnInit() (généralement on la place après le constructeur et
      avant les autres méthodes du component) :
+
+15-7- nous allons pouvoir créer deux nouvelles méthodes :  switchOnAll()  et  switchOffAll()  pour allumer ou éteindre tous les appareils
+d'un coup.
+
+  ** Commencons par préparer ces méthodes dans  AppareilService:
+    [
+        switchOnAll() {
+            for(let appareil of this.appareils) {
+              appareil.status = 'allumé';
+            }
+        }
+
+        switchOffAll() {
+            for(let appareil of this.appareils) {
+              appareil.status = 'éteint';
+            }
+        }
+    ]
