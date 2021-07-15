@@ -32,5 +32,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ![Angular First App](https://user-images.githubusercontent.com/62174583/125852871-45b08db6-630b-4408-83f9-7b0dc04d9596.png)
 <img src="https://user-images.githubusercontent.com/62174583/125852871-45b08db6-630b-4408-83f9-7b0dc04d9596.png">
 
+<h1>Go to Doc.txt for more details.</h1>
+
 
 
