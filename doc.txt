@@ -224,3 +224,34 @@ d'un coup.
             }
         }
     ]
+
+  ** On ajoute 2 boutons dans le template de  AppComponent
+  [
+    <button class="btn btn-success"
+              [disabled]="!isAuth"
+              (click)="onAllumer()">Tout allumer</button>
+    <button class="btn btn-danger"
+              [disabled]="!isAuth"
+              (click)="onEteindre()">Tout éteindre</button>
+  ]
+
+  ** Enfin, il ne nous reste plus qu'à capturer les événements  click  dans  AppComponent  pour ensuite déclencher les méthodes dans
+  AppareilService:
+
+  /(Dans app.components.ts)
+  [
+
+    onAllumer() {
+      this.appareilService.switchOnAll();
+    }
+
+
+    onEteindre() {
+        if(confirm('Etes-vous sûr de vouloir éteindre tous vos appareils ?')) {
+          this.appareilService.switchOffAll();
+        } else {
+          return null;
+        }
+    }
+
+  ]
