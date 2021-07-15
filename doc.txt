@@ -156,3 +156,27 @@ et  ngClass , qui permettent d'attribuer des styles ou des classes de manière d
                 <h3>Chaine de pipes (formatage+Maj)</h3>
                 <p>Mis à jour : {{ lastUpdate | date: 'yMMMMEEEEd' | uppercase }}</p>
               ]
+
+13-2- Le pipe Async:
+Le pipe  async  est un cas particulier mais extrêmement utile dans les applications Web, car il permet de gérer des données asynchrones,
+par exemple des données que l'application doit récupérer sur un serveur.  Dans les chapitres suivants, nous apprendrons à communiquer avec
+un serveur extérieur, mais pour l'instant, nous allons simuler ce comportement en créant une Promise qui va se résoudre au bout de
+quelques secondes.  Modifions  lastUpdate  comme suit :
+  **
+  [
+    lastUpdate: Promise<Date> = new Promise((resolve, reject) => {
+      const date = new Date();
+      setTimeout(
+        () => {
+          resolve(date);
+        }, 2000
+      );
+    });
+  ]
+
+  **et on fait l'appal avec le pipe (async)
+  [
+          <p>Mis à jour : {{ lastUpdate | async | date: 'yMMMMEEEEd' | uppercase }}</p>
+
+  ]
+

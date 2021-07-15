@@ -9,7 +9,17 @@ export class AppComponent {
   title = 'MEHDI BENREFAD';
   isAuth = false;
   //on cree une date
-  lastUpdate = new Date();
+  lastUpdate1 = new Date();
+
+  //last update async
+  lastUpdate: Promise<Date> = new Promise((resolve, reject) => {
+    const date = new Date();
+    setTimeout(
+      () => {
+        resolve(date);
+      }, 2000
+    );
+  });
 
   appareils = [
     {
