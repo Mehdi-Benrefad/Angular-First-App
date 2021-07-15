@@ -180,3 +180,29 @@ quelques secondes.  Modifions  lastUpdate  comme suit :
 
   ]
 
+
+*****************************************************************************************************************************************\
+14- Améliorez la structure du code avec les Services
+  Dit très simplement, un service permet de centraliser des parties de votre code et des données qui sont utilisées par plusieurs parties
+  de votre application ou de manière globale par l'application entière.  Les services permettent donc :
+  de ne pas avoir le même code doublé ou triplé à différents niveaux de l'application - ça facilite donc la maintenance, la lisibilité et
+  la stabilité du code ;
+  de ne pas copier inutilement des données - si tout est centralisé, chaque partie de l'application aura accès aux mêmes informations,
+  évitant beaucoup d'erreurs potentielles.
+
+14-1- Créez maintenant un sous-dossier  services  dans  app , et créez-y un nouveau fichier appelé  appareil.service.ts
+
+14-2-injecter ce service dans  AppModule  en l'ajoutant à l'array  providers
+
+14-3- Angular crée maintenant une instance du service  AppareilService  pour l'application entière.  Pour l'intégrer dans un component,
+on le déclare comme argument dans son constructeur.  Intégrons-le dans  AppComponent
+
+14-4- On retire la declaration des appareils et on la met dans le service.
+
+14-5- dans  AppComponent , déclarons  appareils  simplement comme un array de type  any.
+
+15-6-Il faut maintenant que  AppComponent  puisse récupérer les informations stockées dans  AppareilService .  Pour cela, vous allez
+implémenter la méthode  ngOnInit()
+  ** dans la déclaration de classe  AppComponent , nous allons implémenter l'interface  OnInit
+  ** récupérer les informations depuis  AppareilService  dans la méthode  ngOnInit() (généralement on la place après le constructeur et
+     avant les autres méthodes du component) :
