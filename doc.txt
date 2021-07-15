@@ -10,7 +10,7 @@
 
 6- installer le package rxjs [npm install rxjs-compat --save]
 
-7- on ajout bootstrap a angular.json  archythect>styles> "./node_modules/bootstrap/dist/css/bootstrap.css",
+7- on ajoute bootstrap a angular.json  archythect>styles> "./node_modules/bootstrap/dist/css/bootstrap.css",
 
 8- le dossier app (Ce dossier contient le module principal de l'application et les trois fichiers du component principal  AppComponent  :
  son template en HTML, sa feuille de styles en SCSS, et son fichier TypeScript, qui contiendra sa logique.)
