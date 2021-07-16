@@ -25,6 +25,16 @@ switchOffAll() {
     for(let appareil of this.appareils) {
       appareil.status = 'eteint';
     }
+
 }
+
+switchOnOne(i: number) {
+  this.appareils[i].status = 'allume';
+}
+
+switchOffOne(i: number) {
+  this.appareils[i].status = 'eteint';
+}
+
 
 }

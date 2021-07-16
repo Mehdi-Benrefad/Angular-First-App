@@ -255,3 +255,50 @@ d'un coup.
     }
 
   ]
+
+
+15-8- *** Maintenant on va creer de methodes pour allumer ou eteindre un seul appareil ***
+
+  **Dans un premier temps, il faudra que chaque instance de  AppareilComponent  puisse dire à  AppareilService  à quel membre de l'array
+    reils  elle correspond.  Heureusement, Angular nous permet de faire ça facilement.
+    Dans la directive  *ngFor , ajoutez :  let i = index"
+
+    [
+      <ul class="list-group">
+          <app-appareil  *ngFor="let appareil of appareils; let i = index"
+                        [appareilName]="appareil.name"
+                        [appareilStatus]="appareil.status"
+                        [index]="i"></app-appareil>
+      </ul>
+    ]
+
+  ** Dans  AppareilService , vous allez maintenant créer les méthodes permettant d'allumer ou d'éteindre un seul appareil en fonction de
+    son index dans l'array  appareils  :
+    [
+      switchOnOne(i: number) {
+          this.appareils[i].status = 'allumé';
+      }
+
+
+      switchOffOne(i: number) {
+          this.appareils[i].status = 'éteint';
+      }
+    ]
+
+  ** Ensuite, dans  AppareilComponent , vous allez d'abord intégrer le service  AppareilService, en l'important en haut du fichier comme
+    toujours :
+    [
+      constructor(private appareilService: AppareilService) { }
+    ]
+
+  ** Puis vous allez préparer la méthode qui, en fonction du statut actuel de l'appareil, l'allumera ou l'éteindra :
+    [
+      onSwitch() {
+          if(this.appareilStatus === 'allumé') {
+            this.appareilService.switchOffOne(this.index);
+          } else if(this.appareilStatus === 'éteint') {
+            this.appareilService.switchOnOne(this.index);
+          }
+      }
+    ]
+
