@@ -302,3 +302,56 @@ d'un coup.
       }
     ]
 
+*****************************************************************************************************************************************
+
+16- Gérez la navigation avec le Routing
+
+16-1 preparer l'application pour le routing:
+
+    ** on cree un nouveau components[ng g c auth]
+
+    **Vous allez également devoir modifier un peu l'organisation actuelle afin d'intégrer plus facilement le routing : vous allez créer
+    un component qui contiendra toute la view actuelle et qui s'appellera  AppareilViewComponent  :
+    [ng g c appareil-view]
+
+    ** Ensuite, coupez tout le contenu de la colonne dans  app.component.html , enregistrez-le dans  appareil-view.component.html , et
+    remplacez-le par la nouvelle balise  <app-appareil-view>  :
+    [
+
+    ]
+
+    ** Il faudra également déménager la logique de cette view pour que tout re-marche : injectez  AppareilService , créez l'array
+    appareils , intégrez la logique  ngOnInit  et déplacez les fonctions  onAllumer()  et  onEteindre()  :
+
+    [
+
+
+    ]
+
+  ** on ajoute un barre de navigation a AppComponent avec (routerLink a la place de href)
+
+16-2- Dand (app.module.ts)
+** On crée une constante de type  Routes  (qu'on importe depuis  @angular/router ) qui est un array d'objets JS
+    qui prennent une certaine forme :
+    [
+      import { Routes } from '@angular/router';
+
+      const appRoutes: Routes = [
+        { path: 'appareils', component: AppareilViewComponent },
+        { path: 'auth', component: AuthComponent },
+        { path: '', component: AppareilViewComponent }
+      ];
+    ]
+** Les routes sont maintenant créées, mais il faut les enregistrer dans votre application.  Pour cela, vous allez importer  RouterModule
+    depuis  @angular/router  et vous allez l'ajouter à l'array imports de votre  AppModule , tout en lui appelant la méthode  forRoot()  en
+    lui passant l'array de routes que vous venez de créer :
+    [
+      imports: [
+          BrowserModule,
+          FormsModule,
+          RouterModule.forRoot(appRoutes)
+      ],
+    ]
+
+** Dans app.component.html : on remplace <app-appareil-view>  par  <router-outlet></router-outlet>
+
