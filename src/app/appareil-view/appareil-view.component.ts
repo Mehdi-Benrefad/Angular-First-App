@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AppareilService } from '../services/appareil.service';
 
 @Component({
@@ -7,6 +8,9 @@ import { AppareilService } from '../services/appareil.service';
   styleUrls: ['./appareil-view.component.scss']
 })
 export class AppareilViewComponent implements OnInit {
+
+  //apres subscription
+  appareilSubscription: Subscription = new Subscription();
 
   title = 'MEHDI BENREFAD';
   isAuth = false;
@@ -53,9 +57,21 @@ export class AppareilViewComponent implements OnInit {
     );
   }
 
+  /*
   ngOnInit() {
     this.appareils = this.appareilService.appareils;
-}
+  }
+  */
+
+  //apres subjects
+    ngOnInit() {
+      this.appareilSubscription = this.appareilService.appareilsSubject.subscribe(
+        (appareils: any[]) => {
+          this.appareils = appareils;
+        }
+      );
+      this.appareilService.emitAppareilSubject();
+    }
 
   toutAllumer(){
     console.log('on allume tout')
