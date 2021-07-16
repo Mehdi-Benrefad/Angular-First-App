@@ -451,6 +451,98 @@ d'un coup.
 
   17-2- On injecte le guard dans les routes qu'on veut proteger
 
+  17-3- on ajoute [AppGuard] dans providers
+
 
 **********************************************************************************************************************************************
 
+18-Observez les données avec RxJS
+
+  18-1-Les Observables:
+    Très simplement, un Observable est un objet qui émet des informations auxquelles on souhaite réagir.  Ces informations peuvent venir d'un
+    champ de texte dans lequel l'utilisateur rentre des données, ou de la progression d'un chargement de fichier, par exemple.  Elles peuvent
+    également venir de la communication avec un serveur : le client HTTP, que vous verrez dans un chapitre ultérieur, emploie les Observables.
+
+    Dans notre cas on va creer un observable qui observe un counter sur len nombre de secondes depuis la connexion:
+
+    **Pour avoir accès aux Observables et aux méthodes que vous allez utiliser, il faut ajouter deux imports :
+    [
+
+      import { Observable } from 'rxjs/Observable';
+      import 'rxjs/add/observable/interval';
+
+    ]
+
+
+    **On implemente l'observabe a l'interieur dans la fonction mgOnInit():
+    [
+        ngOnInit() {
+            const counter = Observable.interval(1000);
+            counter.subscribe(
+              (value) => {
+                this.secondes = value;
+              },
+              (error) => {
+                console.log('Uh-oh, an error occurred! : ' + error);
+              },
+              () => {
+                console.log('Observable complete!');
+              }
+            );
+        }
+    ]
+
+
+    ** On affiche le resultat dans le template:
+    [
+      <div class="navbar-right">
+            <p>Vous êtes connecté depuis {{ secondes }} secondes !</p>
+        </div>
+    ]
+
+
+
+  18-2- Les Subscriptions:
+    Afin d'éviter tout problème, quand vous utilisez des Observables personnalisés (surtout quand on boucle infiniment), au lieux d'appliquer
+    la methode subscribe() directement au counter il est vivement conseillé de stocker la souscription dans un objet Subscription (à importer
+    depuis rxjs/Subscription) , On implemente l'interface OnDestroy, puis on cree une fonction  ngOnDestroy() :
+    [
+        counterSubscription: Subscription = new Subscription();
+
+       ngOnInit() {
+          const counter = Observable.interval(1000);
+          this.counterSubscription = counter.subscribe(
+            (value) => {
+              this.secondes = value;
+            },
+            (error) => {
+              console.log('Uh-oh, an error occurred! : ' + error);
+            },
+            () => {
+              console.log('Observable complete!');
+            }
+          );
+        }
+
+        ngOnDestroy() {
+          this.counterSubscription.unsubscribe();
+        }
+      }
+
+
+    ]
+
+    /!\ La fonction  unsubscribe()  détruit la souscription et empêche les comportements inattendus liés aux Observables infinis, donc
+    n'oubliez pas de unsubscribe !
+
+
+
+
+  18-3- Les subjects: Il existe un type d'Observable qui permet non seulement de réagir à de nouvelles informations, mais également d'en
+  émettre.  Imaginez une variable dans un service, par exemple, qui peut être modifié depuis plusieurs components ET qui fera réagir tous les
+  components qui y sont liés en même temps.
+
+  Dans notre cas on va ajouter un subject pour ajouter un niveau d'abstraction par rapport aux donnees, ca va nous permettre de mieux
+  controller de maniere centralisee les donnees. donc le subject emmetera la liste des appareils lorceque nous lui demanderons de le faire.
+
+  ** On modifie la declaration des liste des appareils en leurs donnat une portee "Private"
