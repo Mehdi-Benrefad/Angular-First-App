@@ -355,3 +355,33 @@ d'un coup.
 
 ** Dans app.component.html : on remplace <app-appareil-view>  par  <router-outlet></router-outlet>
 
+
+
+16-3- On va maintenant illustrer l'authentification:
+
+  **Tout d'abord, créez un nouveau fichier  auth.service.ts  dans le dossier services pour gérer l'authentification (n'oubliez pas de
+  l'ajouter également dans l'array  providers  dans  AppModule ) :
+
+  **on ajoute appservice dans appmodule
+    [
+        providers: [
+          AppareilService,
+          AuthService
+        ],
+    ]
+
+
+
+  **on cree une variable [AuthStatus:boolean = false;] dans auth_component
+
+  ** on cree 2 m2thodes onSignIn et onSignOut
+
+  ** On cree une template por auth
+  [
+
+        <h2>Authentification</h2>
+    <button class="btn btn-success" *ngIf="!authStatus" (click)="onSignIn()">Se connecter</button>
+    <button class="btn btn-danger" *ngIf="authStatus" (click)="onSignOut()">Se déconnecter</button>
+
+
+  ]
