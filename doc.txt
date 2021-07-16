@@ -546,3 +546,32 @@ d'un coup.
   controller de maniere centralisee les donnees. donc le subject emmetera la liste des appareils lorceque nous lui demanderons de le faire.
 
   ** On modifie la declaration des liste des appareils en leurs donnat une portee "Private"
+
+  **On cree une variable subject [appareilsSubject = new Subject<any[]>();]
+
+  ** On cree une methode qui va nous permettre de copier la liste des appareils dans le subject:
+  [
+    emitAppareilSubject() {
+      this.appareilsSubject.next(this.appareils.slice());
+    }
+  ]
+
+  ** on fait appel a cette methode dans tous les autres methodes allumer et ettendre [ this.emitAppareilSubject();]
+
+  ** Dans AppareilViewComponent on effectue des changements pour qu'ils soient compatibles avec le service.
+
+    *** On ajoute une variable [appareilSubscription: Subscription;]
+    *** On modifie la methode onInit()
+      [
+        ngOnInit() {
+          this.appareilSubscription = this.appareilService.appareilsSubject.subscribe(
+            (appareils: any[]) => {
+              this.appareils = appareils;
+            }
+          );
+          this.appareilService.emitAppareilSubject();
+        }
+
+      ]
+
+    ***
