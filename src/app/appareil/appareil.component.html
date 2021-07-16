@@ -18,5 +18,7 @@
   <button class="btn btn-sm btn-danger"
           [disabled]="appareilStatus === 'eteint'"
           (click)="onSwitch()">Eteindre</button>
+
+          <a [routerLink]="[id]">Détail</a>
 </li>
 

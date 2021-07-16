@@ -14,7 +14,8 @@ export class AppareilComponent implements OnInit {
   @Input() appareilName: string = "";
   //appareilStatus: string = 'éteint';
   @Input() appareilStatus: string = "";
-  @Input() index: number=0;
+  @Input() index: number = 0;
+  @Input() id: number = 0;
 
   ngOnInit(): void {
   }

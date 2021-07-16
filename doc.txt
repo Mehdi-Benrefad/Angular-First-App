@@ -385,3 +385,48 @@ d'un coup.
 
 
   ]
+
+
+
+  16-4-Paramètres de routes
+      Imaginez qu'on souhaite pouvoir cliquer sur un appareil dans la liste d'appareils afin d'afficher une page avec plus d'informations sur
+      cet appareil : on peut imaginer un système de routing de type  appareils/nom-de-l'appareil , par exemple.  Si on n'avait que deux ou
+      trois appareils, on pourrait être tenté de créer une route par appareil, mais imaginez un cas de figure où l'on aurait 30 appareils, ou
+      300.  Imaginez qu'on laisse l'utilisateur créer de nouveaux appareils ; l'approche de créer une route par appareil n'est pas adaptée.
+      Dans ce genre de cas, on choisira plutôt de créer une route avec paramètre.
+
+    ** On cree un nouveau component [Single Appareil]
+    ** On ajoute un chemin au Router  [{ path: 'appareils/:id', component: SingleAppareilComponent },]
+    ** On personnalise le template
+    ** On modifie le constructeur [constructor(private appareilService: AppareilService,
+            private route: ActivatedRoute) { }]
+
+    ** On recupere l'identifiant [ngOnInit() {
+    this.name = this.route.snapshot.params['id'];}]
+
+    ** On ajoute des identifiants aux appareils
+
+    **on cree une fonction qui nous permet de recuperer un appareil par identifiants
+    [
+        getAppareilById(id: number) {
+            const appareil = this.appareils.find(
+              (s) => {
+                return s.id === id;
+              }
+            );
+            return appareil;
+        }
+    ]
+
+    ** on personnalise la methode on init
+
+    ngOnInit() {
+        const id = this.route.snapshot.params['id'];
+        this.name = this.appareilService.getAppareilById(+id).name;
+        this.status = this.appareilService.getAppareilById(+id).status;
+    }
+
+    ** Et maintenant puisque les routes parametrees fonctionnent il ne nous reste, qu'a passer l'identifiant au composant.
+    *** on ajoute une variable id dans notre composant [@Input() id: number;](Dans appareil component)
+    *** et on lui affecte un valeur a partir de appareilviewcomponent;
+    [[id]="appareil.id"]
