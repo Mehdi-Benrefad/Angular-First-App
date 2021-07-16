@@ -430,3 +430,19 @@ d'un coup.
     *** on ajoute une variable id dans notre composant [@Input() id: number;](Dans appareil component)
     *** et on lui affecte un valeur a partir de appareilviewcomponent;
     [[id]="appareil.id"]
+
+
+
+  16-5- l peut y avoir des cas de figure où l'on souhaiterait rediriger un utilisateur, par exemple pour afficher une page 404 lorsqu'il entre
+    une URL qui n'existe pas.
+
+  ** Creer un component [not-found]
+  ** on modifie la routes en ajoutans deux routes:
+  [
+     { path: 'not-found', component: NotFoundComponent },
+        { path: '**', redirectTo: 'not-found' }
+  ]
+
+
+**********************************************************************************************************************************************
+
