@@ -444,5 +444,13 @@ d'un coup.
   ]
 
 
+17- Les Guards:
+  Il permettent d'empecher certains utilisateurs,d'acceder a des routes (par exemple s'il faut etre authentifie)
+
+  17-1 On cree Unservice qui va jouer le role du guard:(on cree un fichier 'auth-guard.service.ts')
+
+  17-2- On injecte le guard dans les routes qu'on veut proteger
+
+
 **********************************************************************************************************************************************
 
