@@ -24,8 +24,8 @@ import { NewUserComponent } from './new-user/new-user.component';
         { path: '', component: AppareilViewComponent },
         { path: 'appareils/:id',canActivate: [AuthGuard], component: SingleApareilComponent },
         { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },
-        { path: 'new-user', component: NewUserComponent },
-        { path: 'users', component: UserListComponent },
+        { path: 'new-user', canActivate: [AuthGuard] , component: NewUserComponent },
+        { path: 'users', canActivate: [AuthGuard] , component: UserListComponent },
         { path: 'not-found', component: NotFoundComponent },
         { path: '**', redirectTo: 'not-found' }
       ];

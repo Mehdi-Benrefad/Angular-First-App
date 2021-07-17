@@ -698,3 +698,82 @@ d'un coup.
 
 
   * Puis on rajoute cette directive au boutton de soumission du formulaire [[disabled]="userForm.invalid"]
+
+
+
+
+
+
+  23- Ajoutez dynamiquement des FormControl:
+    Dans notre cas on souhaite donner a l'utilisateur la possibilite d'inserer le nombre de honies qu'il souhaite pour ce faire on a besoin
+    d'utiliser la directive "FormArray", il s'agit d'un tableau de plusieurs "FormControl".
+
+      ** Modifions d'abord  initForm()  pour ajouter un  FormArray  vide qui s'appellera hobbies avec la méthode  array
+      [
+        initForm() {
+            this.userForm = this.formBuilder.group({
+              firstName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
+              drinkPreference: ['', Validators.required],
+              hobbies: this.formBuilder.array([])
+            });
+        }
+      ]
+
+      ** Modifions ensuite  onSubmitForm()  pour récupérer les valeurs, si elles existent (sinon, retournez un array vide) :
+
+      [
+        onSubmitForm() {
+            const formValue = this.userForm.value;
+            const newUser = new User(
+              formValue['firstName'],
+              formValue['lastName'],
+              formValue['email'],
+              formValue['drinkPreference'],
+              formValue['hobbies'] ? formValue['hobbies'] : []
+            );
+            this.userService.addUser(newUser);
+            this.router.navigate(['/users']);
+        }
+      ]
+
+
+      ** On ajoute une methode pour retourner les hobies en format array:
+      [
+        getHobbies(): FormArray {
+            return this.userForm.get('hobbies') as FormArray;
+        }
+      ]
+
+
+
+
+      ** On ajoute une methode, qui permet d'ajouter un  FormControl  à  hobbies  , permettant ainsi à l'utilisateur d'en ajouter autant qu'il
+      veut. :
+
+      [
+        onAddHobby() {
+            const newHobbyControl = this.formBuilder.control(null, Validators.required);
+            this.getHobbies().push(newHobbyControl);
+        }
+      ]
+
+
+      ** On ajoute une section au template:
+      [
+        div formArrayName="hobbies">
+              <h3>Vos hobbies</h3>
+              <div class="form-group" *ngFor="let hobbyControl of getHobbies().controls; let i = index">
+                <input type="text" class="form-control" [formControlName]="i">
+              </div>
+              <button type="button" class="btn btn-success" (click)="onAddHobby()">Ajouter un hobby</button>
+        </div>
+      ]
+
+        *** formArrayName:va nous permettre de relier le contenu du div avec le tableau de hibbies qu'on  declare
+        *** let hobbyControl of getHobbies().controls: Ici on recupere les hobbies en utilisant la fonction gethobbies qu'on a cree
+        *** Linput contien un attribut qui permet de stoquer l'indice du form control [formControlName].
+        *** enfin, nous avons le bouton (de type  button  pour l'empêcher d'essayer de soumettre le formulaire) qui déclenche  onAddHobby() ,
+        méthode qui, pour rappel, crée un nouveau  FormControl  (affichant une nouvelle instance de la  <div>  de class  form-group , et donc
+        créant une nouvelle  <input> ).
