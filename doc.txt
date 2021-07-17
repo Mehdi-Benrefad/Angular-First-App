@@ -574,4 +574,53 @@ d'un coup.
 
       ]
 
-    ***
+
+
+ *********************************************************************************************************************************************
+
+  19- Écoutez l'utilisateur avec les Forms - méthode template.
+
+  19-1- On cree un nouveau component qui permettera a l'utilisateur d'enregistrer un nouveau appareil electrique. [ng g component edit-appareil]
+
+  19-2- On implemente le formulaire. (on donne un name au input et aussi on ajoute ngmodel)
+
+  19-3- On ajoute un chemin dans la route.[{ path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },]
+
+  19-4- on recupere le contenu du formulaire a l'aide d'une reference #f a l'interieur d'une fonction declaree a l'interieur du composant.
+
+  19-5- On peut definir l'appareil par defaut eteint, pour cela on doit se lier au ngmodel ([]) , en le liant avec une variable declaree dans
+  le fichier typescript.
+
+  19-5- on ajoute une methode dans appareil service qui va nous permettre d'ajouter un nouvel appareil.
+
+  [
+
+    addAppareil(name: string, status: string) {
+        const appareilObject = {
+          id: 0,
+          name: '',
+          status: ''
+        };
+        appareilObject.name = name;
+        appareilObject.status = status;
+        appareilObject.id = this.appareils[(this.appareils.length - 1)].id + 1;
+        this.appareils.push(appareilObject);
+        this.emitAppareilSubject();
+    }
+
+  ]
+
+  19-6- On modifie le constructeur en lui ajoutant des parametres [private appareilService: AppareilService,
+              private router: Router]
+
+  19-7- on modifie l methode onSubmitt()
+  [
+      onSubmit(form: NgForm) {
+    const name = form.value['name'];
+    const status = form.value['status'];
+    this.appareilService.addAppareil(name, status);
+    this.router.navigate(['/appareils']);
+  }
+  ]
+
+

@@ -13,12 +13,14 @@ import { AuthService } from './services/auth.service';
 import { SingleApareilComponent } from './single-apareil/single-apareil.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
 
       const appRoutes: Routes = [
         { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
         { path: 'auth', component: AuthComponent },
         { path: '', component: AppareilViewComponent },
         { path: 'appareils/:id',canActivate: [AuthGuard], component: SingleApareilComponent },
+        { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },
         { path: 'not-found', component: NotFoundComponent },
         { path: '**', redirectTo: 'not-found' }
       ];
@@ -30,7 +32,8 @@ import { AuthGuard } from './services/auth-guard.service';
     AppareilComponent,
     AuthComponent,
     AppareilViewComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EditAppareilComponent
   ],
   imports: [
     BrowserModule,
