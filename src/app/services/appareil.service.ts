@@ -1,6 +1,11 @@
+import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { HttpClient } from '@angular/common/http';
 
+@Injectable()
 export class AppareilService {
+
+  constructor(private httpClient: HttpClient) { }
 
   appareilsSubject = new Subject<any[]>();
 
@@ -81,6 +86,39 @@ addAppareil(name: string, status: string) {
   appareilObject.id = this.appareils[(this.appareils.length - 1)].id + 1;
   this.appareils.push(appareilObject);
   this.emitAppareilSubject();
+}
+
+
+
+
+//méthode qui va enregistrer l'array  appareils  dans la base de données au endpoint  /appareils  par la méthode POST
+
+saveAppareilsToServer() {
+  this.httpClient
+    .put('https://http-client-demo-601ae-default-rtdb.firebaseio.com/appareils.json', this.appareils)
+    .subscribe(
+      () => {
+        console.log('Enregistrement terminé !');
+      },
+      (error) => {
+        console.log('Erreur ! : ' + error);
+      }
+    );
+}
+
+
+getAppareilsFromServer() {
+  this.httpClient
+    .get<any[]>('https://http-client-demo-601ae-default-rtdb.firebaseio.com/appareils.json')
+    .subscribe(
+      (response) => {
+        this.appareils = response;
+        this.emitAppareilSubject();
+      },
+      (error) => {
+        console.log('Erreur ! : ' + error);
+      }
+    );
 }
 
 

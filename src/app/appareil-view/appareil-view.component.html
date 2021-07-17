@@ -38,6 +38,12 @@
               [disabled]="!isAuth"
               (click)="onEteindre()">Tout éteindre</button>
 
+      <button class="btn btn-primary"
+              (click)="onSave()">Enregistrer les appareils</button>
+
+      <button class="btn btn-primary"
+      (click)="onFetch()">Récupérer les appareils</button>
+
       <br><br><br>
       <h2>Created By: {{title}}</h2>
     </div>

@@ -762,7 +762,7 @@ d'un coup.
 
       ** On ajoute une section au template:
       [
-        div formArrayName="hobbies">
+        <div formArrayName="hobbies">
               <h3>Vos hobbies</h3>
               <div class="form-group" *ngFor="let hobbyControl of getHobbies().controls; let i = index">
                 <input type="text" class="form-control" [formControlName]="i">
@@ -777,3 +777,100 @@ d'un coup.
         *** enfin, nous avons le bouton (de type  button  pour l'empêcher d'essayer de soumettre le formulaire) qui déclenche  onAddHobby() ,
         méthode qui, pour rappel, crée un nouveau  FormControl  (affichant une nouvelle instance de la  <div>  de class  form-group , et donc
         créant une nouvelle  <input> ).
+
+
+
+
+**********************************************************************************************************************************************
+
+23- Interagissez avec un serveur avec HttpClient
+
+
+23-1- Preparer le Back-End:
+    ** Firebase > go to console > new project > project name: (http-client-demo) > realtime database > create database
+    ** On doit modifier les regles: [
+      {
+        "rules": {
+          ".read": "true",  // 2021-8-16
+          ".write": "true",  // 2021-8-16
+        }
+      }
+    ]
+
+    ** On copie l'url qui va nous permettre d'acceder a notre base de donnees.
+    //https://http-client-demo-601ae-default-rtdb.firebaseio.com/
+
+
+23-2- Envoyer vers le Back-End:
+
+    ** On ajoute "HttpClientModule," aux imports de appModule.
+    (sans oublier de l'importer [import { HttpClientModule } from '@angular/common/http';])
+
+    ** nous allo ns utiliser  HttpClient , dans un premier temps, pour la gestion des données de la liste d'appareils.  Vous allez donc
+    l'injecter dans  AppareilService , en y ayant auparavant ajouté le décorateur  @Injectable()  (importé depuis  @angular/core):
+
+    ** Nous allons d'abord créer une méthode qui va enregistrer l'array  appareils  dans la base de données au endpoint  /appareils  par la
+    méthode POST :
+
+    [
+      saveAppareilsToServer() {
+          this.httpClient
+            .post('https://httpclient-demo.firebaseio.com/appareils.json', this.appareils)
+            .subscribe(
+              () => {
+                console.log('Enregistrement terminé !');
+              },
+              (error) => {
+                console.log('Erreur ! : ' + error);
+              }
+            );
+      }
+    ]
+
+
+  ** Créons maintenant un bouton dans  AppareilViewComponent  qui déclenche cette sauvegarde (en passant, si vous ne l'avez pas encore fait,
+  nous pouvons retirer l'activation conditionnelle des boutons "Tout allumer" et "Tout éteindre")
+
+  ** maintenant ajoutons une methode onSave() dans appareilView.
+
+  /!\ Cependant, si nous cliquons plusieurs fois sur ce bouton, Firebase continuera à créer de nouveaux nodes, et dans ce cas de figure,
+  ce n'est pas le comportement souhaité. Il faudrait que chaque enregistrement écrase le précédent : pour cela, utilisons plutôt la méthode
+  put()  (il n'y a pas besoin de changer les arguments, car les méthodes  put()  et  post()  prennent les deux mêmes premiers arguments)
+
+
+
+
+
+
+
+23-3- Recevoir depuis le Back-End:
+
+  ** on cree une methodequi recupere les appareil du serveurs (Dans le service des appareils)
+  [
+    getAppareilsFromServer() {
+        this.httpClient
+          .get<any[]>('https://http-client-demo-601ae-default-rtdb.firebaseio.com/appareils.json')
+          .subscribe(
+            (response) => {
+              this.appareils = response;
+              this.emitAppareilSubject();
+            },
+            (error) => {
+              console.log('Erreur ! : ' + error);
+            }
+          );
+    }
+  ]
+
+
+  ** on ajoute un boutton de recuperation au template
+      [
+        <button class="btn btn-primary"
+            (click)="onFetch()">Récupérer les appareils</button>
+      ]
+  ** on ajoute une methode qui fait appel a la methode de recuperation du service.
+    [
+      onFetch() {
+          this.appareilService.getAppareilsFromServer();
+      }
+    ]

@@ -89,4 +89,15 @@ export class AppareilViewComponent implements OnInit {
 }
 
 
+//fonction qui nous pernettera d.enregistrer dans firebase
+onSave() {
+  this.appareilService.saveAppareilsToServer();
+}
+
+
+//fonction de recuperation de firebase
+onFetch() {
+  this.appareilService.getAppareilsFromServer();
+}
+
 }
