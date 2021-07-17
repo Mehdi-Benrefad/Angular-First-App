@@ -638,4 +638,18 @@ d'un coup.
   ** On personnalise la template avec des directives pour afficher la liste des utilisateurs.
   ** On ajoute un chemin vers le composant users-list [{ path: 'users', component: UserListComponent },]
   ** On rajoute le chemin dans la barre de navigation. [<li routerLinkActive="active"><a routerLink="users">Utilisateurs</a></li>]
-  ** Dernière étape : il faut ajouter  ReactiveFormsModule , importé depuis  @angular/forms , à l'array  imports  de  AppModule  :
+  ** Dernière étape : il faut ajouter  ReactiveFormsModule , importé depuis  @angular/forms , à l'array  imports  de  AppModule.
+
+  21- Construire un formulaire avec FormBuilder:
+  Dans la méthode template, l'objet formulaire mis à disposition par Angular était de type  NgForm , mais ce n'est pas le cas pour les
+  formulaires réactifs.  Un formulaire réactif est de type  FormGroup , et il regroupe plusieurs  FormControl  (tous les deux importés depuis
+  @angular/forms ).  commoncons d'abord, donc, par créer l'objet dans notre nouveau component  NewUserComponent  :
+
+  ** On cree un nouveau component NewUserComponent[ng g c new-user]
+  ** On implemente le formulaire reactif dans ce component : NewUserComponent .
+  ** On cree une route bers ce component a partir de userList : [<a routerLink="/new-user">Nouvel utilisateur</a>]
+  ** On ajoute un chemin vers new User.
+
+  ** et puis on implemente le fichier typescript du component:
+
+
