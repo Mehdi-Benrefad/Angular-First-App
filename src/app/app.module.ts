@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { MonPremierComponent } from './mon-premier/mon-premier.component';
@@ -14,6 +14,8 @@ import { SingleApareilComponent } from './single-apareil/single-apareil.componen
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
+import { UserService } from './services/User.service';
+import { UserListComponent } from './user-list/user-list.component';
 
       const appRoutes: Routes = [
         { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
@@ -21,6 +23,7 @@ import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
         { path: '', component: AppareilViewComponent },
         { path: 'appareils/:id',canActivate: [AuthGuard], component: SingleApareilComponent },
         { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },
+        { path: 'users', component: UserListComponent },
         { path: 'not-found', component: NotFoundComponent },
         { path: '**', redirectTo: 'not-found' }
       ];
@@ -33,17 +36,20 @@ import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
     AuthComponent,
     AppareilViewComponent,
     NotFoundComponent,
-    EditAppareilComponent
+    EditAppareilComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule
   ],
   providers: [
     AppareilService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    UserService
 
   ],
   bootstrap: [AppComponent]

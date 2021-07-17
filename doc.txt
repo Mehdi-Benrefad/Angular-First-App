@@ -624,3 +624,18 @@ d'un coup.
   ]
 
 
+**********************************************************************************************************************************************
+20- Écoutez l'utilisateur avec les Forms - méthode réactive
+  Pour illustrer la méthode réactive, nous allons créer une nouvelle section dans l'application des appareils électriques : nous allons
+  permettre aux utilisateurs de créer un profil utilisateur simple.  Cette démonstration utilisera des compétences que nous avons apprises
+  tout au long de ce cours, et vous allez également créer votre premier modèle de données sous forme d'une classe TypeScript.
+
+  ** On cree un nouveau dossier "Modeles"
+  ** Dans le dossier Models on cree un fichier "User.model.ts"
+  ** On cree un nouveau service "UserService"
+  ** On ajoute ce service au tableau prooviders de appModule
+  ** On cree un nouveau composant UserList
+  ** On personnalise la template avec des directives pour afficher la liste des utilisateurs.
+  ** On ajoute un chemin vers le composant users-list [{ path: 'users', component: UserListComponent },]
+  ** On rajoute le chemin dans la barre de navigation. [<li routerLinkActive="active"><a routerLink="users">Utilisateurs</a></li>]
+  ** Dernière étape : il faut ajouter  ReactiveFormsModule , importé depuis  @angular/forms , à l'array  imports  de  AppModule  :
