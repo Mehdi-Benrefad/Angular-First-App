@@ -10,7 +10,7 @@ import { AppareilService } from '../services/appareil.service';
 })
 export class EditAppareilComponent implements OnInit {
 
-  defaultOnOff = 'éteint';
+  defaultOnOff = 'eteint';
 
   constructor(private appareilService: AppareilService,
     private router: Router) { }

@@ -610,7 +610,7 @@ d'un coup.
 
   ]
 
-  19-6- On modifie le constructeur en lui ajoutant des parametres [private appareilService: AppareilService,
+  19-6- On modifie le constructeur en lui injectant des parametres [private appareilService: AppareilService,
               private router: Router]
 
   19-7- on modifie l methode onSubmitt()
