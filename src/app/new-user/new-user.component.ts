@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup , Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../models/User.model';
 import { UserService } from '../services/User.service';
@@ -26,6 +26,8 @@ export class NewUserComponent implements OnInit {
     this.initForm();
   }
 
+  //before valodators
+  /*
   initForm() {
     this.userForm = this.formBuilder.group({
       firstName: '',
@@ -34,6 +36,18 @@ export class NewUserComponent implements OnInit {
       drinkPreference: ''
     });
   }
+  */
+
+  // after Validators
+  initForm() {
+    this.userForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      drinkPreference: ['', Validators.required]
+    });
+}
+
 
   onSubmitForm() {
     const formValue = this.userForm.value;

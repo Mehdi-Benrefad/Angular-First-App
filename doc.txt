@@ -651,5 +651,50 @@ d'un coup.
   ** On ajoute un chemin vers new User.
 
   ** et puis on implemente le fichier typescript du component:
+    *** On cree une variable UserForm de type "FormGroup" qui va etre initialisee a l'aide d'un composant form builder.
+    *** On cree 2 methodes une pour initioaliser le form builder et une autre pour effectuer un traitement au submit du formulaire,
+    [
+      initForm() {
+        this.userForm = this.formBuilder.group({
+          firstName: '',
+          lastName: '',
+          email: '',
+          drinkPreference: ''
+        });
+      }
+
+      **************************************
+      onSubmitForm() {
+        const formValue = this.userForm.value;
+        const newUser = new User(
+          formValue['firstName'],
+          formValue['lastName'],
+          formValue['email'],
+          formValue['drinkPreference']
+        );
+        this.userService.addUser(newUser);
+        this.router.navigate(['/users']);
+      }
+
+    ]
 
 
+
+
+  22- Validators:
+  Pour ajouter la validation, nous allons modifier légèrement notre exécution de  FormBuilder.group  :
+  [
+
+    initForm() {
+        this.userForm = this.formBuilder.group({
+          firstName: ['', Validators.required],
+          lastName: ['', Validators.required],
+          email: ['', [Validators.required, Validators.email]],
+          drinkPreference: ['', Validators.required]
+        });
+    }
+
+  ]
+
+
+  * Puis on rajoute cette directive au boutton de soumission du formulaire [[disabled]="userForm.invalid"]
