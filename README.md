@@ -31,6 +31,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 <h1>Demo:</h1>
 
 
+
+https://user-images.githubusercontent.com/62174583/126135201-f49be6c9-3ed6-42d2-8b2a-3b4d618f9408.mp4
+
+
 <h1>Go to Doc.txt for more details.</h1>
 
 
